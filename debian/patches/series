@@ -1,0 +1,12 @@
+0001-New-statx-function.patch
+0002-src-lckpwdf.c-create-an-empty-etc-.pwd.lock.patch
+0003-check-return-value-of-dladdr.patch
+0004-tmpnam.c-fix-heap-overflow.patch
+0005-declare-missing-bufs-remove-ver-from-lstat.patch
+0006-fix-glibc-2.33-compatibility.patch
+0007-wrap-fstatat-and-fstatat64.patch
+0008-Wrap-all-functions-accessing-etc-passwd-etc-group-an.patch
+0009-add-test-t-rm.t-and-amend-test-t-touch.t-with-no-der.patch
+0010-support-glibc-2.34-by-wrapping-__-f-l-stat-at-64_tim.patch
+0011-also-investigate-.interp-section-for-architectures-t.patch
+0012-test-touch.inc.sh-use-testtree-variable.patch
