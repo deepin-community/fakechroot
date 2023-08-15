@@ -1,0 +1,30 @@
+#!/bin/sh
+
+set -exu
+
+date="$(dpkg-parsechangelog --show-field=Date)"
+SOURCE_DATE_EPOCH="$(date --date="$date" +%s)"
+export SOURCE_DATE_EPOCH
+
+# change to temporary directory to not interfere with the source
+cd "$AUTOPKGTEST_TMP"
+
+ret=0
+# variants important and standard differ because permissions drwxr-sr-x
+# and extended attributes of ./var/log/journal/ cannot be preserved
+# in fakechroot mode
+for variant in essential apt minbase buildd; do
+	mmdebstrap --variant=$variant --mode=root unstable root.tar
+	touch fakechroot.tar
+	chown "$AUTOPKGTEST_NORMAL_USER" fakechroot.tar
+	runuser -u "$AUTOPKGTEST_NORMAL_USER" -- mmdebstrap --variant=$variant --mode=fakechroot unstable fakechroot.tar
+	cmp root.tar fakechroot.tar || ret=$((ret+$?))
+	rm root.tar fakechroot.tar
+done
+
+if [ "$ret" -eq 0 ]; then
+	echo "all tests succeeded" >&2
+else
+	echo "$ret tests failed" >&2
+fi
+exit $ret

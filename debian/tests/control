@@ -1,0 +1,4 @@
+# depend on libc-bin to make sure that this test gets run on every glibc upload
+Tests: mmdebstrap
+Depends: mmdebstrap, fakechroot, fakeroot, libc-bin
+Restrictions: needs-root, allow-stderr
